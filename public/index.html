@@ -13,7 +13,10 @@
 
         const baseUrl = 'http://localhost:8383/'
 
-        document.addEventListener("keydown", (event) => { sendKeyToBackend(event.key) });
+        document.addEventListener("keydown", (event) => {
+            console.log(event.key)
+            sendKeyToBackend(event.key)
+        });
 
         async function sendKeyToBackend(key) {
 
