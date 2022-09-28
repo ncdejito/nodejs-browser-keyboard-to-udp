@@ -6,36 +6,27 @@ const port = 8383;
 var dgram = require('dgram');
 var client = dgram.createSocket('udp4');
 
+const valid_keys = new Map();
+valid_keys.set('w', '11');
+valid_keys.set('a', '01');
+valid_keys.set('s', '00');
+valid_keys.set('d', '10');
+
 app.use(express.static('public'))
 app.use(express.json())
 
 app.post('/', (req, res) => {
-    const { parcel } = req.body
-    // console.log(parcel)
-    if (!parcel) {
+    const { key } = req.body
+    if (!key) {
         return res.status(400).send({ status: 'failed' })
     }
     res.status(200).send({ status: 'received' })
 
+    console.log(key);
+    if (valid_keys.has(key)) {
+        client.send(valid_keys.get(key), 0, 2, 12000, '127.0.0.1');
+    }
 
-
-    if (parcel == "s") {
-        client.send('00', 0, 2, 12000, '127.0.0.1');
-        console.log("stop")
-    }
-    if (parcel == "w") {
-        client.send('11', 0, 2, 12000, '127.0.0.1');
-        console.log("forward")
-    }
-    if (parcel == "d") {
-        client.send('10', 0, 2, 12000, '127.0.0.1');
-        console.log("right")
-    }
-    if (parcel == "a") {
-        client.send('01', 0, 2, 12000, '127.0.0.1');
-        console.log("left")
-    }
-    console.log(parcel)
 })
 
 app.listen(port, () => console.log(`Server has started on port: ${port}`))
