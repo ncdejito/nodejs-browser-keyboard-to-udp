@@ -1,5 +1,7 @@
 # nodejs-browser-keyboard-to-udp
-Send browser keypresses to NodeJS backend, that sends messages to udp
+Send browser keypresses to NodeJS backend, that sends messages to udp python
+
+![](assets/proof.png)
 
 ## Usage
 1. In terminal 1, run 
